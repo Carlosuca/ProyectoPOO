@@ -35,10 +35,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.playerPb)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBox1
+            // playerPb
             // 
             this.playerPb.Location = new System.Drawing.Point(299, 375);
-            this.playerPb.Name = "pictureBox1";
+            this.playerPb.Name = "playerPb";
             this.playerPb.Size = new System.Drawing.Size(157, 34);
             this.playerPb.TabIndex = 0;
             this.playerPb.TabStop = false;

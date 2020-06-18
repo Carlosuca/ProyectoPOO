@@ -66,7 +66,7 @@
             // 
             this.bttnStartGame.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.bttnStartGame.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bttnStartGame.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bttnStartGame.Font = new System.Drawing.Font("Montserrat", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bttnStartGame.Location = new System.Drawing.Point(323, 183);
             this.bttnStartGame.Name = "bttnStartGame";
             this.bttnStartGame.Size = new System.Drawing.Size(154, 84);
@@ -119,7 +119,6 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.Move += new System.EventHandler(this.Form1_Move);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

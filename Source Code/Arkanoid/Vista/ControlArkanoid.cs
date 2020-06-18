@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Arkanoid.Controlador;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -12,6 +13,7 @@ namespace Arkanoid
         private PictureBox ball;
 
         private double tiempoTranscurido = 0, tiempoLimite = 4;
+        private int remainingPb = 0;
 
         // Para trabajar con pic + label
         private PictureBox heart;
@@ -21,7 +23,7 @@ namespace Arkanoid
 
         private delegate void BallActions();
         private readonly BallActions BallMovements;
-        public Action FinishGame;
+        public Action FinishGame, WinningGame;
 
         public ControlArkanoid()
         {
@@ -72,13 +74,16 @@ namespace Arkanoid
 
         private void LoadTiles()
         {
+            // Variables auxiliares para el calculo de tamano de cada cpb
             int xAxis = 10, yAxis = 5;
+            remainingPb = xAxis * yAxis;
 
             int pbWidth = (Width - (xAxis - 5)) / xAxis;
             int pbHeight = (int)(Height * 0.3) / yAxis;
 
             cpb = new CustomPictureBox[yAxis, xAxis];
 
+            // Rutina de instanciacion y agregacion al UserControl
             for (int i = 0; i < yAxis; i++)
             {
                 for (int j = 0; j < xAxis; j++)
@@ -98,8 +103,7 @@ namespace Arkanoid
                     cpb[i, j].Left = j * pbWidth;
                     cpb[i, j].Top = i * pbHeight + scorePanel.Height + 1;
 
-                    int imageBack = 0;
-
+                    int imageBack;
                     if (i % 2 == 0 && j % 2 == 0)
                         imageBack = 3;
                     else if (i % 2 == 0 && j % 2 != 0)
@@ -129,6 +133,7 @@ namespace Arkanoid
 
         private void ControlArkanoid_MouseMove(object sender, MouseEventArgs e)
         {
+            // Manejo de movimiento de barra y pelota cuando el juego no ha iniciado
             if (!GameData.gameStarted)
             {
                 if (e.X < (Width - playerPb.Width))
@@ -137,6 +142,7 @@ namespace Arkanoid
                     ball.Left = playerPb.Left + (playerPb.Width / 2) - (ball.Width / 2);
                 }
             }
+            // Manejo de movimiento de barra cuando el juego ya inicio
             else
             {
                 if (e.X < (Width - playerPb.Width))
@@ -149,69 +155,87 @@ namespace Arkanoid
             if (!GameData.gameStarted)
                 return;
 
-            tiempoTranscurido += timer1.Interval;
-
-            if (tiempoTranscurido / 1000 / 60 == 4)
-                FinishGame?.Invoke();
-            // GameData.ticksCount += 0.01;
-            BallMovements?.Invoke();
-        }
-
-        private void ControlArkanoid_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Space)
+            try
             {
-                GameData.gameStarted = true;
-                timer1.Start();
-
-                if (blackPanel != null)
-                    blackPanel.Hide();
+                BallMovements?.Invoke();
             }
-            else if(e.KeyCode == Keys.Escape)
+            catch(OutOfBoundsException ex)
             {
-                blackPanel = new Panel();
-                blackPanel.BackColor = Color.FromArgb(100, Color.Black);
-                blackPanel.Size = Size;
-
-                Controls.Add(blackPanel);
-                blackPanel.Show();
-                Controls.SetChildIndex(blackPanel, -1);
-            }
-        }
-
-        private void BounceBall()
-        {
-            if (ball.Top < 0)
-                GameData.dirY = -GameData.dirY;
-
-            if (ball.Bottom > Height)
-            {
-                GameData.lifes--;
-                GameData.gameStarted = false;
-                timer1.Stop();
-
-                RepositionElements();
-                UpdateElements();
-
-                if (GameData.lifes == 0)
+                try
                 {
+                    GameData.lifes--;
+                    GameData.gameStarted = false;
                     timer1.Stop();
 
+                    RepositionElements();
+                    UpdateElements();
+
+                    if (GameData.lifes == 0)
+                    {
+                        throw new NoRemainingLifesException("");
+                    }
+                }
+                catch (NoRemainingLifesException ex2)
+                {
+                    timer1.Stop();
                     FinishGame?.Invoke();
                 }
             }
+        }
 
+        // Detectar Space para iniciar el juego
+        private void ControlArkanoid_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (!GameData.gameStarted)
+                {
+                    switch (e.KeyCode)
+                    {
+                        case Keys.Space:
+                            GameData.gameStarted = true;
+                            timer1.Start();
+                            break;
+                        default:
+                            throw new WrongKeyPressedException("Presione Space para iniciar el juego");
+                    }
+                }
+            }
+            catch(WrongKeyPressedException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        // Rutina de rebote de pelota
+        private void BounceBall()
+        {
+            // Rebote en la parte superior
+            if (ball.Top < scorePanel.Height)
+            {
+                GameData.dirY = -GameData.dirY;
+                return;
+            }
+
+            // Pelota se sale de los bounds
+            if (ball.Bottom > Height)
+                throw new OutOfBoundsException("");
+
+            // Rebote en lado derecho o izquierdo de la ventana
             if (ball.Left < 0 || ball.Right > Width)
             {
                 GameData.dirX = -GameData.dirX;
                 return;
             }
 
+            // Rebote con el jugador
             if (ball.Bounds.IntersectsWith(playerPb.Bounds))
             {
                 GameData.dirY = -GameData.dirY;
+                return;
             }
 
+            // Rutina de colisiones con cpb
             for (int i = 4; i >= 0; i--)
             {
                 for (int j = 0; j < 10; j++)
@@ -225,6 +249,8 @@ namespace Arkanoid
                         {
                             Controls.Remove(cpb[i, j]);
                             cpb[i, j] = null;
+
+                            remainingPb--;
                         }
                         else if(cpb[i, j].Tag.Equals("blinded"))
                             cpb[i, j].BackgroundImage = Image.FromFile("../../Img/tb2.png");
@@ -232,6 +258,9 @@ namespace Arkanoid
                         GameData.dirY = -GameData.dirY;
 
                         score.Text = GameData.score.ToString();
+
+                        if (remainingPb == 0)
+                            WinningGame?.Invoke();
 
                         return;
                     }
@@ -327,6 +356,8 @@ namespace Arkanoid
             Controls.Add(scorePanel);
         }
 
+        // Reposicionamiento de elementos luego de perder una vida
+
         private void RepositionElements()
         {
             playerPb.Left = (Width / 2) - (playerPb.Width / 2);
@@ -334,6 +365,7 @@ namespace Arkanoid
             ball.Left = playerPb.Left + (playerPb.Width / 2) - (ball.Width / 2);
         }
 
+        // Actualizacion de elementos luego de perder una vida
         private void UpdateElements()
         {
             remainingLifes.Text = "x " + GameData.lifes.ToString();

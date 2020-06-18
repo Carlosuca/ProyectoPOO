@@ -77,38 +77,54 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControlArkanoid.cs">
+    <Compile Include="Controlador\EmptyNicknameException.cs" />
+    <Compile Include="Controlador\ExceededMaxCharactersException.cs" />
+    <Compile Include="Controlador\NoRemainingLifesException.cs" />
+    <Compile Include="Controlador\OutOfBoundsException.cs" />
+    <Compile Include="Controlador\PlayerController.cs" />
+    <Compile Include="Controlador\WrongKeyPressedException.cs" />
+    <Compile Include="Modelo\Player.cs" />
+    <Compile Include="Vista\ControlArkanoid.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ControlArkanoid.Designer.cs">
+    <Compile Include="Vista\ControlArkanoid.Designer.cs">
       <DependentUpon>ControlArkanoid.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomPictureBox.cs">
+    <Compile Include="Modelo\CustomPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DataBaseController.cs" />
-    <Compile Include="DatosJuego.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Controlador\DataBaseController.cs" />
+    <Compile Include="Controlador\DatosJuego.cs" />
+    <Compile Include="Vista\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="Vista\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormTop.cs">
+    <Compile Include="Vista\FormRegister.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormTop.Designer.cs">
+    <Compile Include="Vista\FormRegister.Designer.cs">
+      <DependentUpon>FormRegister.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Vista\FormTop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Vista\FormTop.Designer.cs">
       <DependentUpon>FormTop.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ControlArkanoid.resx">
+    <EmbeddedResource Include="Vista\ControlArkanoid.resx">
       <DependentUpon>ControlArkanoid.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="Vista\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormTop.resx">
+    <EmbeddedResource Include="Vista\FormRegister.resx">
+      <DependentUpon>FormRegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Vista\FormTop.resx">
       <DependentUpon>FormTop.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
