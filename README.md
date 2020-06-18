@@ -1,6 +1,8 @@
 # Proyecto final - POO
 
 ## Avisos
+* Ver [**método de entrega**](#método-de-entrega)<br>
+* Aclaración: **deberán implementar como mínimo 5 excepciones personalizadas a lo largo de su código**.
 * Añadidas sprites para uso de todos, en dado caso no quieran crear las propias. No es evaluado si las crean o no
 * El manual técnico cambia entre los grupos de tres y cuatro personas, leer sección de [documentación](#documentación)
 * Entrega primer avance - **sábado 13 de junio (sin ponderación)**
@@ -21,6 +23,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;[Herramientas](#herramientas)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Problemas en flujo de trabajo](#problemas-en-flujo-de-trabajo)<br>
 [**Documentación**](#documentación)<br>
+[**Método de entrega**](#método-de-entrega)<br>
 
 ## Definición formal
 El proyecto final de la materia consistirá en la recreación de un juego clásico, **Arkanoid**. Para las personas que nunca lo han jugado o escuchado, acá un breve video.
@@ -135,3 +138,53 @@ Lista de eventos y excepciones con breve descripción.
 
 ### Adicional para los grupos de cuatro integrantes
 En la sección de UML del Manual Técnico deberá agregar un UML de diagrama de casos de uso.
+
+## Método de entrega
+Para tener **derecho** a calificación deberá seguir **al pie de la letra** las siguientes indicaciones:
+
+<ul>
+  <li>
+    Deberá tener dentro de su repositorio los siguientes elementos:
+    <ul>
+      <li>Una carpeta llamada SourceCode que contenga el código fuente de su proyecto</li>
+      <li>Una carpeta llamada Documentación, que deberá contener el manual técnico, el script utilizado de la base de datos, y dos archivos en formato PNG que corresponderán al diagrama relacional normalizado de su base de datos, y el diagrama de clases. <b>Para grupos de más de cuatro integrantes, recordar anexar también el manual de usuario</b></li>
+      <li>Un archivo README.md con la estructura mencionada acá</li>
+    </ul>
+  </li>
+  <li>Crear un release en GitHub. Esto lo puede hacer en la pestaña releases de la barra de su repositorio, seleccionará <b>Create new Release</b>, en la ventana que cargue:
+    <ul>
+      <li>En Tag Version deberá colocar <b>v1.0.0</b></li>
+  <li>En @master (justo a la par del Tag Version), deberá dar clic y seleccionar commits, luego el commit más reciente realizado</li>
+  <li>En Release Title <b>Arkanoid Project Release</b></li>
+  <li>Y finalmente en la parte donde dice "Describe this release" debe colocar cinco aspectos importantes del proyecto.</li>
+     <b>Ojo: este proceso debe ser realizado únicamente por una persona del grupo</b>
+    </ul>
+  </li>
+</ul>
+PD: si en su proyecto utilizó fuentes personalizadas, recuerde abrir un issue en **este** repositorio, con el nombre de la fuente que utilizó y su link de descarga. Si un grupo no lo hace, y el programa lanza una excepción, entonces tendrá disminución en su nota por no seguir indicaciones.
+<br>
+<b><a href="https://github.com/Walter26/ProyectoPOO/releases/tag/v1.0.0" target="_blank">Ver ejemplo de release</a></b>
+
+## Formato de archivo README
+El archivo README que colocará en su repositorio deberá estar escrito en **MarkDown**, y su extensión debe ser README.md, esto puede crearse propiamente desde GitHub, editores de código como Atom, VSCode, o incluso desde IDEs como Rider.
+
+El README deberá contener:
+
+<ol>
+  <li>Como título el nombre de su grupo</li>  
+  <li>Como subtítulo o título 2 la palabra "Integrantes", y luego una lista con los nombres y carnets de cada uno de los integrantes de su equipo</li>
+  <li>Como subtítulo o título 2, la palabra "IDE", y luego el IDE utilizado. Si por alguna razón utilizaron más de uno, especificar</li>
+  <li>Como subtítulo o título 2, la palabra "FAQ's" que hace referencia a "Frequently Asked Questions", en la cuál deberá colocar mínimo 5 preguntas (con su respuesta) que un usuario pueda hacerle a usted como desarrollador acerca del <b>funcionamiento</b>, ojo, no son preguntas respecto al código, ni como hicieron tal cosa, sino preguntas como:
+    <ul>
+      <li>¿Cómo iniciar el juego?</li>
+      <li>¿Cómo salir del juego?</li>
+      <li>¿Qué pasa si encuentro un error?</li>
+      <li>¿Dónde puedo ver mi puntaje?</li>
+      <li>Mi nombre aparece en la lista de Top Jugadores, ¿que significa esto?</li>
+    </ul>
+    Puede que algunas preguntas sean sumamente obvias, pero como desarrolladores se debe asumir siempre que el usuario es lo más ignorante posible y ser lo más explicativos posibles.
+    </li>
+  <li>Como subtítulo o título 2, la palabra "Trello", y el link correspondiente a su tablero</li>
+</ol>
+
+PD: Cuidar su ortografía
